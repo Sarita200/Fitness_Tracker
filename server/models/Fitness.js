@@ -1,4 +1,5 @@
 import { Schema,model } from "mongoose";
+import User from "./user.js";
 
 const fitnessSchema = new Schema({
     duration :{
@@ -17,14 +18,7 @@ const fitnessSchema = new Schema({
         type:String,
         default:0,
     },
-    reps:{
-        type:String,
-        default:0
-    },
-    yoga:{
-        type: String,
-        default: "others"
-    },
+    
     bodyweight:{
         type:String,
         default:0,
@@ -32,6 +26,10 @@ const fitnessSchema = new Schema({
     distance:{
         type: String,
         default:true
+    },
+    user :{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
     }
 },{
 
