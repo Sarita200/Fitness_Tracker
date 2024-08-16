@@ -1,10 +1,11 @@
 import Fitness from "../models/Fitness.js";
 
 const PostFitnessData = async (req,res)=>{
-    const { duration, exercise, date, weight, bodyweight, distance, user } = req.body;
+    const { workoutNo, duration, exercise, date, weight, bodyweight, distance, user } = req.body;
 
     const fitnessdata = new Fitness({
         duration,
+        workoutNo,
         exercise,
         date,
         weight,
@@ -29,6 +30,7 @@ const PostFitnessData = async (req,res)=>{
         })
     }
 }
+
 
 export {
     PostFitnessData

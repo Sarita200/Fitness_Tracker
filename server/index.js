@@ -5,14 +5,8 @@ import cors from 'cors'
 dotenv.config()
 import User from './models/user.js'
 import Fitness from './models/Fitness.js'
-import bcrypt from 'bcrypt'
 import { PostLogin, PostRegister } from './controllers/user.js'
 import { PostFitnessData } from './controllers/fitness.js'
-
-const saltRounds = 20;
-const hashPassword = async (password) =>{
-    return await bcrypt.hash(password , saltRounds)
-}
 
 const app = express()
 app.use(express.json());
@@ -35,11 +29,10 @@ app.get('/',(req,res)=>{
         success:true
     })
 })
-
 app.post('/register',PostRegister)
-
 app.post('/login',PostLogin)
 app.post('/fitness',PostFitnessData)
+
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT , ()=>{

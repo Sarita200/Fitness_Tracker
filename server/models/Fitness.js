@@ -2,6 +2,11 @@ import { Schema,model } from "mongoose";
 import User from "./user.js";
 
 const fitnessSchema = new Schema({
+    workoutNo:{
+        type:Number,
+        required:true,
+        unique:true
+    },
     duration :{
         type :String,
         required:true
