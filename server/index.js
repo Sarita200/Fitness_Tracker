@@ -5,6 +5,13 @@ import cors from 'cors'
 dotenv.config()
 import User from './models/user.js'
 import Fitness from './models/Fitness.js'
+import bcrypt from 'bcrypt'
+import { PostLogin, PostRegister } from './controllers/user.js'
+
+const saltRounds = 20;
+const hashPassword = async (password) =>{
+    return await bcrypt.hash(password , saltRounds)
+}
 
 const app = express()
 app.use(express.json());
@@ -28,58 +35,9 @@ app.get('/',(req,res)=>{
     })
 })
 
-app.post('/register',async(req,res) =>{
-    const {fullName,email,mobileNo,dob,password} = req.body;
+app.post('/register',PostRegister)
 
-    const user = new User({
-        fullName:fullName,
-        email:email,
-        mobileNo:mobileNo,
-        dob: new Date(dob),
-        password:password
-    })
-    
-
-    try{
-        const savedUser = await user.save();
-        res.json({
-            message:"User Registered Successfully",
-            success:true,
-            user:savedUser
-            })
-    }
-    catch(e){
-        res.json({
-            message:e.message,
-            success:false,
-            data:null
-        })
-    }
-})
-
-app.post('/login',async(req,res) =>{
-    const {email,password} = req.body;
-
-    const user = await User.findOne({
-        email:email,
-        password:password
-    })
-
-    if(!user){
-        return res.json({
-        success:false,
-        message:"Invalid User",
-        data:null
-        })
-    }
-    else{
-        return res.json({
-            success: true,
-            message:"User Loged in successfully",
-            data:user
-        })
-    }
-})
+app.post('/login',PostLogin)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT , ()=>{
